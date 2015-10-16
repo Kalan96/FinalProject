@@ -1,41 +1,60 @@
-//https://www.youtube.com/watch?v=R51BIlAt_Hg
-
+//First game to pop up in my head
+//Help from stack over flow and Youtube mainly from NVTHD and Cross Coast Gaming
 package project1;
 
-import java.util.Scanner;
+import java.util.Scanner;//Imports Scanner
 
-public class TicTacToe {
-	public static int row, col;
-	public static Scanner scan = new Scanner(System.in);
-	public static char [][] board = new char[3][3];
-	public static char turn = 'x';
+import javax.swing.JOptionPane;//Imports JOptionPane
+
+public class TicTacToe {//Name
+	public static int row, col;// Creates row and column
+	public static Scanner scan = new Scanner(System.in);// Creates Scanner
+	public static char [][] board = new char[3][3];// Board grid
+	public static char turn = 'x';// Starting turn
+	public static boolean playAgain = true;// To Play again if wanted
 	
 	public static void main(String[] args){
-		for (int i = 0; i < 3; i++){
-			for (int j = 0; j < 3; j++) {
-				board[i][j] = '_';
+		String again;
+		do{
+			for (int i = 0; i < 3; i++){
+				for (int j = 0; j < 3; j++) {
+					board[i][j] = '_';
+				}
 			}
-		}
-		
-		
-		Play();
-		
+			Play();
+			
+			again = JOptionPane.showInputDialog("Play again?");// Asking if they want to play again
+			if(again.equalsIgnoreCase("Yes")){
+				playAgain = true;
+			}else{
+				playAgain = false;
+			}
+		}while(playAgain);
 	}
 
 	public static void Play() {
 		boolean playing = true;
+		boolean userInputCheck = true;
 		PrintBoard();
 		while (playing){
-			System.out.println("Please enter a row and column: ");
-			row = scan.nextInt() - 1;
-			col = scan.nextInt() - 1;
+			do{
+				System.out.println("Please enter a row and column: ");
+				row = scan.nextInt() - 1;// See where to put character
+				col = scan.nextInt() - 1;
+				if(row >= 0 && row <= 2 && col >= 0 && col <= 2){
+					userInputCheck=false;
+				} else{
+					userInputCheck=true;// Checks for accurate number
+					System.out.println("Make sure to enter a valid number!");
+				}
+			}while(userInputCheck);
 			board[row][col] = turn;
 			if (GameOver(row, col)){
-				playing =false;
+				playing = false;// Checks to see if there is a winner
 				System.out.println("Game over! Player " + turn + " wins!");
 			}
 			
-			PrintBoard();
+			PrintBoard();// Turn changing or deciding
 			if(turn == 'x')
 				turn = '0';
 			else
@@ -52,7 +71,7 @@ public class TicTacToe {
 				System.out.print(board[i][j] + " | ");
 			}
 		}
-		System.out.println();
+		System.out.println();// Creates board
 	}
 	
 	public static boolean GameOver(int rMove, int cMove){
