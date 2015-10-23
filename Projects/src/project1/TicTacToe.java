@@ -10,10 +10,11 @@ public class TicTacToe {//Name
 	public static int row, col;// Creates row and column
 	public static Scanner scan = new Scanner(System.in);// Creates Scanner
 	public static char [][] board = new char[3][3];// Board grid
-	public static char turn = 'x';// Starting turn
+	public static char turn = 'x';// Starting turn character so must be single quotes
 	public static boolean playAgain = true;// To Play again if wanted
 	
 	public static void main(String[] args){
+		int credit = 0;
 		String again;
 		do{
 			for (int i = 0; i < 3; i++){
@@ -21,25 +22,31 @@ public class TicTacToe {//Name
 					board[i][j] = '_';
 				}
 			}
+			
 			Play();
 			
 			again = JOptionPane.showInputDialog("Play again?");// Asking if they want to play again
 			if(again.equalsIgnoreCase("Yes")){
 				playAgain = true;
 			}else{
-				playAgain = false;
+				playAgain = false;// Closes if they don't want to play again
+			}
+			if(credit < 3){
+				credit ++;
+			}else{
+				System.exit(0);
 			}
 		}while(playAgain);
 	}
 
-	public static void Play() {
+	public static void Play() { //Method creates game structure
 		boolean playing = true;
 		boolean userInputCheck = true;
 		PrintBoard();
 		while (playing){
 			do{
 				System.out.println("Please enter a row and column: ");
-				row = scan.nextInt() - 1;// See where to put character
+				row = scan.nextInt() - 1;// See where to put character - 1 since java starts at 0
 				col = scan.nextInt() - 1;
 				if(row >= 0 && row <= 2 && col >= 0 && col <= 2){
 					userInputCheck=false;
@@ -62,7 +69,7 @@ public class TicTacToe {//Name
 		}
 	}
 	
-	public static void PrintBoard(){
+	public static void PrintBoard(){ //Method creates board layout
 		for (int i = 0; i < 3; i++){
 			System.out.println();
 			for (int j = 0; j < 3; j++){
@@ -74,11 +81,12 @@ public class TicTacToe {//Name
 		System.out.println();// Creates board
 	}
 	
-	public static boolean GameOver(int rMove, int cMove){
-		// Check perpendicular victory
+	public static boolean GameOver(int rMove, int cMove){ // Last method and creates int row move and column move
+		// Check perpendicular victory					// Boolean makes sure it returns to the main method making it not a void
 		if (board [0][cMove] == board[1][cMove]
 				&& board[0][cMove] == board[2][cMove])
 			return true;
+		// Check parallel victory
 		if (board[rMove][0] == board[rMove][1]
 				&& board[rMove][0] == board[rMove][2])
 			return true;
