@@ -3,11 +3,18 @@ package exercise4;
 /*
  * inspiration would be I am from Washington and there are allot of apples and I was hungry
  * I got help from Subin to make sure which loop should be used
+ * Tried looking for average apple count per tree and could not find one so I came up with these ones
  * 
  */
 
+
 import javax.swing.JOptionPane;
 import java.security.SecureRandom;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.File;
 
 public class Appletrees {
 
@@ -15,8 +22,50 @@ public class Appletrees {
 	public static int total; // Creates int total
 	public static SecureRandom myGenerator = new SecureRandom(); // Creates random number generator
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception
+	{
 		int apples;
+		
+		FileReader file = new FileReader("C:/users/Kalan Knott/Desktop/readme.txt");
+		BufferedReader reader = new BufferedReader(file);
+		
+		String text = "";
+		String line = reader.readLine();
+		while (line != null){
+			text += line;
+			line = reader.readLine();
+		}
+		
+		reader.close();
+		System.out.println(text);
+		
+		File newfile = new File("C:/Users/Kalan Knott/Desktop/newFile.txt");
+		if (newfile.exists())
+			System.out.println("The file already exists!");
+		else
+		{
+			try
+			{
+				newfile.createNewFile();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			try
+			{
+			FileWriter fileW = new FileWriter(newfile);
+			BufferedWriter buffW = new BufferedWriter(fileW);
+			buffW.write("This is how it writes in to text file!");
+			buffW.close();
+			System.out.println("Check newFile!");
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 		
 		String name; //Name prompt
 		name = JOptionPane.showInputDialog("Howdy farmer! You got a name?");
