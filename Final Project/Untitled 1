@@ -1,0 +1,5 @@
+This program was made based off the idea of plug in plays for TVs.
+Cole had talked about doing this in his program and i thought it was a great idea.
+The controller takes the details for the jbutton from the Button class.
+Then it gives the player the option of which game to play.
+It saves their name for later use in the program.
